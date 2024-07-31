@@ -1,4 +1,4 @@
 #!/usr/bin/bash
 
-python main.py configs/example_128.yaml
+python main.py configs/example.yaml
 
