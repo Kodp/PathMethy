@@ -81,11 +81,9 @@ def process_config(yaml_file):
   :return: config object(namespace)
   """
   config, _ = get_config_from_yaml(yaml_file)
-  print(" THE Configuration of your experiment ..")
+  # print(" The Configuration of your experiment ..")
   
-  
-  
-  pprint(config)  
+  # pprint(config)  
 
   
   try:

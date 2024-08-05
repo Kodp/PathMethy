@@ -283,18 +283,18 @@ class ViTmodAgent(BaseAgent):
 
   def _verbose(self, str_Y_test, str_results, metrics, file_name):
     print('-' * 80)
-    print(f"测试数据集：{file_name}")
-    print("每个类别样本数量：")
+    print(f"Testing dataset: {file_name}")
+    print("Number of samples per category:")
     for name, count in Counter(str_Y_test).items():
       print(f"{name:20} {count}")
-    print("每个类别预测正确的数量：")
+    print("Correct number predicted for each category:")
     true_num_per_classes = caluate_true_num_per_class(str_results, str_Y_test)
     for name, count in true_num_per_classes.items():
       print(f"{name:20} {count}")
-    print("分类报告：")
+    print("Classification report:")
     print(classification_report(str_results, str_Y_test, digits=self.config.digits, zero_division=0))
     print(f"Precision: {metrics['acc']:.4f}', f'Recall: {metrics['recall']:.4f}',f'F1: {metrics['f1']:.4f}", end='\n\n')
-    print("每个 样本分类(真实) - 预测分类")
+    print("Per Sample Classification (Real) -Predicted Classification")
     for i, y in enumerate(str_Y_test):
       print(f"{i:<3}", f"{y:<20}", f"{str_results[i]}")
      

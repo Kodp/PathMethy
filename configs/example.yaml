@@ -1,41 +1,42 @@
 
 
-#@ 项目的实验名称, 每个实验要改名称
+#@ Each experiment needs a unique name
 exp_name: example
 
-# 使用的代理类名
+# Used agent class name
 agent: ViTmodAgent 
 
-# 运行模式
+# Operation mode
 mode: test  # train test topk print 
-# train: 训练，需要指定 `data_path` -- 训练的数据路径
-# test: 测试, 需要指定 `test_data_path_list`--测试的数据路径列表， 以及被测的模型路径 `model_weight_path_list`
-# topk： 输出topk的结果
-# print: 特殊模式，打印(print)中间层的 Embedding
+# train: for training, specify `data_path` -- the data path for training
+# test: for testing, specify `test_data_path_list`-- list of data paths for testing, 
+#       and the model paths `model_weight_path_list` to be tested
+# topk: outputs the top k results
+# print: special mode, prints the embedding of intermediate layers
 
-# 数据模式和路径
+# Data mode and path
 data_mode: train  
-data_path: /mnt/mydisk/xjj/DNA_methylation/Data_train_test231123/Filtered/Filteredmethylation_TCGA_primary.pkl
+data_path: 
 
-k: 5  # topk的k值
-topk_model_path: /home/xjj/song/Pytorch-Project-Template/experiments/ttc128/checkpoints/ckpt_03-10-09:05:14-326043_fold-3_acc-0.9535_pre-0.9535_recall-0.9535_f1-0.9522.pth.tar
+k: 5  # the k value for topk
+topk_model_path: 
 
-test_verbose: True  # 测试时是否输出详细的每一个数据集上的预测结果（细粒度到每一个样本的结果）
-digits: 4  # 输出指标（acc，pre，recall，f1）的小数位数
+test_verbose: True   # whether to output detailed prediction results for each dataset during testing (down to each sample)
+digits: 4   # the number of decimal places for metrics (acc, pre, recall, f1)
 
 dtype_data: pandas.DataFrame  
 
-external_matrix_path: /mnt/mydisk/xjj/DNA_methylation/crosstalk-network/cor_matrix50.csv  # BinoX 矩阵
+external_matrix_path: data/cor_matrix50.csv # BinoX 
 
-# CUDA设置
+# CUDA settings
 cuda: true  
 gpu_device: 0
 seed: 42
 
 some_model_attribute: 0
-num_classes: 32  # 分类数
+num_classes: 32  
 
-# 模型参数
+# Model parameters
 model_params:
   num_classes: 32
   dim: 128
@@ -50,43 +51,44 @@ model_params:
   
 
 model_weight_path_list: 
-- /mnt/data/syh/PathMethy/MODEL/model.pth.tar
+- MODEL/model.pth.tar
 
 
-write_result: True  # 是否将结果写入文件
 
+write_result: True  # whether to write the result to a file
 
 batch_size: 128
-test_batch_size: 16  # 验证、测试集的 batch size
+test_batch_size: 16  # batch size for validation and test sets
 
-# 优化器参数
+# Optimizer parameters
 learning_rate: 0.0001
-max_epoch: 30  # 最大训练 epoch
-log_interval: 20 # 日志记录间隔batch
+max_epoch: 30  # maximum training epochs
+log_interval: 20 # interval for logging batches
 
-# 交叉验证的折数
+
+
+# Number of folds for cross-validation
 kfolds: 10
 
-# # 每隔多少周期进行一次验证
 # validate_every: 2
 
-# 检查点文件名称
+# Checkpoint file name
 checkpoint_file: checkpoint.pth.tar
 
-# 数据加载器
+# Data loader
 data_loader: ViTmodDataLoader
 data_loader_workers: 3
 pin_memory: true
 
 
 
-# 测试数据的路径列表，一个也用列表表示
+# Path list for test data, even a single path is represented as a list
 test_data_path_list:
-- /mnt/data/syh/PathMethy/data/test_data.pkl
+- data/test_data.pkl
 
-# 键要用str包裹访问
+# Access keys as strings
 numidx_to_GEO: {0: 'Adrenocortical', 1: 'Bladder', 2: 'Breast', 3: 'Cervical', 4: 'Cholangiocarcinoma', 5: 'Colon', 6: 'Lymphoma', 7: 'Esophagus', 8: 'Brain', 9: 'Head and neck', 10: 'Kidney', 11: 'Kidney', 12: 'Kidney', 13: 'Lymphoma', 14: 'Brain', 15: 'Liver', 16: 'Lung', 17: 'Lung', 18: 'Mesothelioma', 19: 'Ovarian', 20: 'Pancreas', 21: 'Pheochromocytoma and Paraganglioma', 22: 'Prostate', 23: 'Sarcoma', 24: 'Melanoma', 25: 'Stomach', 26: 'Testicular Germ Cell Tumors', 27: 'Thyroid', 28: 'Thymoma', 29: 'Uterine', 30: 'Uterine', 31: 'Melanoma'}
-# TCGA 无重
+# TCGA mappings, no duplicates
 numidx_to_TCGA: {0: 'ACC', 1: 'BLCA', 2: 'BRCA', 3: 'CESC', 4: 'CHOL', 5: 'COADREAD', 6: 'DLBC', 7: 'ESCA', 8: 'GBM', 9: 'HNSC', 10: 'KICH', 11: 'KIRC', 12: 'KIRP', 13: 'LAML', 14: 'LGG', 15: 'LIHC', 16: 'LUAD', 17: 'LUSC', 18: 'MESO', 19: 'OV', 20: 'PAAD', 21: 'PCPG', 22: 'PRAD', 23: 'SARC', 24: 'SKCM', 25: 'STAD', 26: 'TGCT', 27: 'THCA', 28: 'THYM', 29: 'UCEC', 30: 'UCS', 31: 'UVM'}
 
 

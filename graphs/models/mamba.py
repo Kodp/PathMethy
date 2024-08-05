@@ -5,7 +5,7 @@ import torch
 from torch import nn
 from einops import rearrange, repeat
 from einops import repeat
-from mamba_ssm import Mamba
+# from mamba_ssm import Mamba
 
 class MyMamba(nn.Module):
   def __init__(self, *,
