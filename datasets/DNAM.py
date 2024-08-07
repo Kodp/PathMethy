@@ -47,8 +47,8 @@ class ViTmodDataLoader:
 
   def preload_train_data(self, data_path):
     """
-    预加载训练数据，并没有真正拿到 Dataloader
-    还需要 set_current_fold
+    Preload training data without actually getting the Dataloader
+    Still need to set_current_fold
     """
     print("Loading training data from", data_path)
     X, str_Y = self.read_pd(data_path)
@@ -72,14 +72,14 @@ class ViTmodDataLoader:
 
   def set_current_fold(self, fold):
     """
-    设置当前折的索引，并加载当前折的数据
+    Set the index of the current fold and load the data of the current fold
     """
     self.current_fold = fold
     self.load_data_for_current_fold()
 
   def load_data_for_current_fold(self):
     """
-    加载当前折的训练集和验证集
+    Load the training set and verification set of the current fold
     """
     train_idx, valid_idx = self.splits[self.current_fold]
     self.train_loader = DataLoader(ViTmodDataset(self.X[train_idx], self.Y[train_idx]),
@@ -97,8 +97,8 @@ class ViTmodDataLoader:
 
   def read_pd(self, data_path):
     """
-    读取 pkl 格式的 pandas table
-    仅读取，不做预处理
+    Read a pandas table in pkl format
+    Only read, no preprocessing
     :returns X, Y
     """
     PDT_data = pd.read_pickle(data_path)  
@@ -108,8 +108,8 @@ class ViTmodDataLoader:
 
   def load_test_data(self, test_data_path):
     """
-    加载**一个**测试集到test_loader
-    @test data loader 的Y是str类型！
+    Load **one** test dataset into the test_loader
+    @The Y in the data loader is of type str!
     """
     self.X_test, self.str_Y_test = self.read_pd(test_data_path)
     

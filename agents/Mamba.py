@@ -229,10 +229,11 @@ class MambaAgent(BaseAgent):
 
   def test_one_model(self):
     """
-    在一个模型上测试所有的测试数据集。
-    :param write_to_file: 是否将结果写入文件 
-      写入的格式为 csv，行是四个指标，列是不同数据集。左上角(0,0)位置显示数据集名称
-    :returns 返回一个字典，键是数据集名称，值是指标字典
+    Test all test datasets on a model.
+    :param write_to_file: Whether to write the results to a file
+          The format of writing is csv, rows are four metrics, columns are different datasets. 
+          The top-left (0,0) position shows the dataset name
+    :returns Returns a dictionary, where the key is the dataset name and the value
     """
     self.model.eval()
     path_metric_dict = {}
@@ -274,34 +275,37 @@ class MambaAgent(BaseAgent):
 
   def _verbose(self, str_Y_test, str_results, metrics, file_name):
     print('-' * 80)
-    print(f"测试数据集：{file_name}")
-    print("每个类别样本数量：")
+    print(f"testing dataset{file_name}")
+    print("Number of samples per category:")
     for name, count in Counter(str_Y_test).items():
       print(f"{name:20} {count}")
-    print("每个类别预测正确的数量：")
+    print("Number of correct predictions for each category.")
     true_num_per_classes = caluate_true_num_per_class(str_results, str_Y_test)
     for name, count in true_num_per_classes.items():
       print(f"{name:20} {count}")
-    print("分类报告：")
+    print("Classification report:")
     print(classification_report(str_results, str_Y_test, digits=self.config.digits, zero_division=0))
     print(f"Precision: {metrics['acc']:.4f}', f'Recall: {metrics['recall']:.4f}',f'F1: {metrics['f1']:.4f}", end='\n\n')
-    print("每个 样本分类(真实) - 预测分类")
+    print("Per Sample Classification (Real) -Predicted Classification")
     for i, y in enumerate(str_Y_test):
       print(f"{i:<3}", f"{y:<20}", f"{str_results[i]}")
   @torch.no_grad()
   def test_topk(self):
     """
-    加载指定路径的模型，计算topk结果，输出的同时写入文件
-    打印在指定数据集上的topk结果
-    输出格式形如：
-    测试 Filteredmethylation_cfDNA.pkl  大小: 74
-    Top-1 准确率: 21.6216% | Top-2 准确率: 24.3243% | Top-3 准确率: 27.0270% | Top-4 准确率: 32.4324% | Top-5 准确率: 37.8378% | 
-    每个样本的 Top5 预测分类
+    Load the model from the specified path, compute the top-k results, and 
+    write them to a file while outputting
+    Print the top-k results on the specified dataset
+    
+    Output format is as follows:
+    Test Filteredmethylation_cfDNA.pkl  Size: 74
+    Top-1 Accuracy: 21.6216% | Top-2 Accuracy: 24.3243% | Top-3 Accuracy: 27.0270% | Top-4 Accuracy: 32.4324% | Top-5 Accuracy: 37.8378% |
+    Top-5 predicted categories for each sample
     0 Colon                ['Lymphoma', 'Ovarian', 'Thymoma', 'Adrenocortical', 'Prostate']
     1 Colon                ['Lymphoma', 'Ovarian', 'Adrenocortical', 'Thymoma', 'Liver']
     2 Colon                ['Lymphoma', 'Ovarian', 'Adrenocortical', 'Liver', 'Thymoma']
     3 Colon                ['Lymphoma', 'Ovarian', 'Adrenocortical', 'Thymoma', 'Liver']
-    4 Prostate             ['Prostate', 'Ovarian', 'Sarcoma', 'Adrenocortical', 'Testicular Germ Ce。。。
+    4 Prostate             ['Prostate', 'Ovarian', 'Sarcoma', 'Adrenocortical', 'Testicular Germ Ce...
+
     """
     k = self.config.k
     self.load_checkpoint(self.config.topk_model_path)
@@ -309,7 +313,7 @@ class MambaAgent(BaseAgent):
     for test_data_path in self.config.top5_test_data_path:
       
       self.data_loader.load_test_data(test_data_path)
-      self.logger.info(f"测试 {test_data_path.split('/')[-1]}")
+      self.logger.info(f"test {test_data_path.split('/')[-1]}")
       acc_list = []
       
       for i in range(1, k + 1):
@@ -319,7 +323,7 @@ class MambaAgent(BaseAgent):
       
       message_parts = []
       for i, acc in enumerate(acc_list):
-        message_parts.append(f"Top-{i+1} 准确率: {acc:.4f}")
+        message_parts.append(f"Top-{i+1} Accuarcy: {acc:.4f}")
       self.logger.info(" | ".join(message_parts))
 
       
@@ -408,7 +412,7 @@ class MambaAgent(BaseAgent):
 
 def caluate_true_num_per_class(pred, Y_str):
   """
-  计算每个类别的真实数量
+  Calculates the true number for each category
   """
   true_num_per_class = {}
   for pred, actual in zip(pred, Y_str):

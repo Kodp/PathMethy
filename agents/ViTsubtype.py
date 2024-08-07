@@ -223,17 +223,26 @@ class ViTmodAgent_subtype(BaseAgent):
 
   def test(self):
     """
-    对配置文件中列出的所有模型进行测试，并汇总每个模型在不同数据集上的评价指标。
-    遍历配置中的模型权重路径列表，为每个模型加载权重并设置为评估模式。对每个模型调用`test_one_model`方法，
-    该方法返回一个包含模型在各数据集上的评价指标的字典。
-    评价指标字典的格式示例：
+    Test all models listed in the configuration file and summarize the evaluation 
+    metrics of each model on different datasets.
+    
+    Iterate through the list of model weight paths in the configuration, 
+    load the weights for each model, and set it to evaluation mode.
+    
+    For each model, call the `test_one_model` method, which returns 
+    a dictionary of evaluation metrics for the model on various datasets.
+    
+    An example format of the evaluation metrics dictionary:
     path_metric_dict = {
-        '数据集1': {'指标1': 值1, '指标2': 值2, '指标3': 值3, '指标4': 值4},
+        'Dataset1': {'Metric1': Value1, 'Metric2': Value2, 'Metric3': Value3, 'Metric4': Value4},
     }
 
-    如果`config.write_result`为True，所有模型的评价指标将被保存到一个Excel文件中，每个模型的指标之间会有空行。
-    all_metric_list (list): 存储所有模型的评价指标字典。
+    If `config.write_result` is True, the evaluation metrics for all models 
+    will be saved to an Excel file, with a blank line between the metrics of each model.
+    
+    all_metric_list (list): Stores the evaluation metrics dictionary for all models.
     """
+
     all_metric_list = []
     for idx, model_weight_path in enumerate(self.config.model_weight_path_list):
       self.load_checkpoint(model_weight_path)
@@ -258,12 +267,6 @@ class ViTmodAgent_subtype(BaseAgent):
       self.logger.info(f"All metrics saved to `{save_path}`")
 
   def test_one_model(self):
-    """
-    在一个模型上测试所有的测试数据集。
-    :param write_to_file: 是否将结果写入文件 
-      写入的格式为 csv，行是四个指标，列是不同数据集。左上角(0,0)位置显示数据集名称
-    :returns 返回一个字典，键是数据集名称，值是指标字典
-    """
     self.model.eval()
     path_metric_dict = {}
     
@@ -302,43 +305,30 @@ class ViTmodAgent_subtype(BaseAgent):
 
   def _verbose(self, str_Y_test, str_results, metrics, file_name):
     print('-' * 80)
-    print(f"测试数据集：{file_name}")
-    print("每个类别样本数量：")
+    print(f"Test data set:{file_name}")
+    print("Number of samples per category:")
     for name, count in Counter(str_Y_test).items():
       print(f"{name:20} {count}")
-    print("每个类别预测正确的数量：")
+    print("Number of correct predictions for each category.")
     true_num_per_classes = caluate_true_num_per_class(str_results, str_Y_test)
     for name, count in true_num_per_classes.items():
       print(f"{name:20} {count}")
-    print("分类报告：")
+    print("Classification report:")
     print(classification_report(str_results, str_Y_test, digits=self.config.digits, zero_division=0))
     print(f"Precision: {metrics['acc']:.4f}', f'Recall: {metrics['recall']:.4f}',f'F1: {metrics['f1']:.4f}", end='\n\n')
-    print("每个 样本分类(真实) - 预测分类")
+    print("Per Sample Classification (Real) -Predicted Classification")
     for i, y in enumerate(str_Y_test):
       print(f"{i:<3}", f"{y:<20}", f"{str_results[i]}")
      
   @torch.no_grad()
   def test_topk(self):
-    """
-    加载指定路径的模型，计算topk结果，输出的同时写入文件
-    打印在指定数据集上的topk结果
-    输出格式形如：
-    测试 Filteredmethylation_cfDNA.pkl  大小: 74
-    Top-1 准确率: 21.6216% | Top-2 准确率: 24.3243% | Top-3 准确率: 27.0270% | Top-4 准确率: 32.4324% | Top-5 准确率: 37.8378% | 
-    每个样本的 Top5 预测分类
-    0 Colon                ['Lymphoma', 'Ovarian', 'Thymoma', 'Adrenocortical', 'Prostate']
-    1 Colon                ['Lymphoma', 'Ovarian', 'Adrenocortical', 'Thymoma', 'Liver']
-    2 Colon                ['Lymphoma', 'Ovarian', 'Adrenocortical', 'Liver', 'Thymoma']
-    3 Colon                ['Lymphoma', 'Ovarian', 'Adrenocortical', 'Thymoma', 'Liver']
-    4 Prostate             ['Prostate', 'Ovarian', 'Sarcoma', 'Adrenocortical', 'Testicular Germ Ce。。。
-    """
     k = self.config.k
     self.load_checkpoint(self.config.topk_model_path)
     self.model.eval()
     for test_data_path in self.config.top5_test_data_path:
       
       self.data_loader.load_test_data(test_data_path)
-      self.logger.info(f"测试 {test_data_path.split('/')[-1]}")
+      self.logger.info(f"test {test_data_path.split('/')[-1]}")
       acc_list = []
       
       for i in range(1, k + 1):
@@ -348,7 +338,7 @@ class ViTmodAgent_subtype(BaseAgent):
       
       message_parts = []
       for i, acc in enumerate(acc_list):
-        message_parts.append(f"Top-{i+1} 准确率: {acc:.4f}")
+        message_parts.append(f"Top-{i+1} Accuracy: {acc:.4f}")
       self.logger.info(" | ".join(message_parts))
 
       
@@ -431,9 +421,6 @@ class ViTmodAgent_subtype(BaseAgent):
 
 
 def caluate_true_num_per_class(pred, Y_str):
-  """
-  计算每个类别的真实数量
-  """
   true_num_per_class = {}
   for pred, actual in zip(pred, Y_str):
     if pred == actual:

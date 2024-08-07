@@ -4,7 +4,7 @@ from tqdm import tqdm
 import numpy as np
 
 Kegg_path = "/mnt/mydisk/xjj/DNA_methylation/KEGG_cg/KEGG_result_DNA_methylation611.csv"
-print("Kegg表格：")
+print("Kegg table:")
 Kegg_table = pd.read_csv(Kegg_path)
 print(Kegg_table, '\n')
 
@@ -14,7 +14,7 @@ cgxxx_list = []
 
 for cg_name in Kegg_table['cg_name']:  
   cgxxx_list.extend(cg_name.split("/"))
-print(f"聚合cg列表的长度：{len(cgxxx_list)}, 不重复的cg的个数（Kegg所用的基因的个数）：{len(set(cgxxx_list))}")
+print(f"Length of aggregate cg list: {len(cgxxx_list)}, Number of non-duplicate cgs (number of genes used by Kegg):{len(set(cgxxx_list))}")
 
 
 base_path = '/mnt/mydisk/xjj/DNA_methylation/Result/7-subtype/GEO_data/'

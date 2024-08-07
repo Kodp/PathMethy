@@ -237,12 +237,6 @@ class ViTmodAgent(BaseAgent):
       self.logger.info(f"All metrics saved to `{save_path}`")
 
   def test_one_model(self):
-    """
-    在一个模型上测试所有的测试数据集。
-    :param write_to_file: 是否将结果写入文件 
-      写入的格式为 csv，行是四个指标，列是不同数据集。左上角(0,0)位置显示数据集名称
-    :returns 返回一个字典，键是数据集名称，值是指标字典
-    """
     self.model.eval()
     path_metric_dict = {}
     
@@ -300,26 +294,13 @@ class ViTmodAgent(BaseAgent):
      
   @torch.no_grad()
   def test_topk(self):
-    """
-    加载指定路径的模型，计算topk结果，输出的同时写入文件
-    打印在指定数据集上的topk结果
-    输出格式形如：
-    测试 Filteredmethylation_cfDNA.pkl  大小: 74
-    Top-1 准确率: 21.6216% | Top-2 准确率: 24.3243% | Top-3 准确率: 27.0270% | Top-4 准确率: 32.4324% | Top-5 准确率: 37.8378% | 
-    每个样本的 Top5 预测分类
-    0 Colon                ['Lymphoma', 'Ovarian', 'Thymoma', 'Adrenocortical', 'Prostate']
-    1 Colon                ['Lymphoma', 'Ovarian', 'Adrenocortical', 'Thymoma', 'Liver']
-    2 Colon                ['Lymphoma', 'Ovarian', 'Adrenocortical', 'Liver', 'Thymoma']
-    3 Colon                ['Lymphoma', 'Ovarian', 'Adrenocortical', 'Thymoma', 'Liver']
-    4 Prostate             ['Prostate', 'Ovarian', 'Sarcoma', 'Adrenocortical', 'Testicular Germ Ce。。。
-    """
     k = self.config.k
     self.load_checkpoint(self.config.topk_model_path)
     self.model.eval()
     for test_data_path in self.config.top5_test_data_path:
       
       self.data_loader.load_test_data(test_data_path)
-      self.logger.info(f"测试 {test_data_path.split('/')[-1]}")
+      self.logger.info(f"test {test_data_path.split('/')[-1]}")
       acc_list = []
       
       for i in range(1, k + 1):
@@ -329,7 +310,7 @@ class ViTmodAgent(BaseAgent):
       
       message_parts = []
       for i, acc in enumerate(acc_list):
-        message_parts.append(f"Top-{i+1} 准确率: {acc:.4f}")
+        message_parts.append(f"Top-{i+1} Accuracy: {acc:.4f}")
       self.logger.info(" | ".join(message_parts))
 
       
@@ -416,9 +397,6 @@ class ViTmodAgent(BaseAgent):
 
 
 def caluate_true_num_per_class(pred, Y_str):
-  """
-  计算每个类别的真实数量
-  """
   true_num_per_class = {}
   for pred, actual in zip(pred, Y_str):
     if pred == actual:

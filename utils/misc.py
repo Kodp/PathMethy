@@ -5,7 +5,7 @@ from sklearn.metrics import precision_recall_fscore_support, accuracy_score
 
 def get_str_from_metric(metrics_d):
   """
-  从字典中提取四个指标的值，返回一个字符串
+  Extract the values of four indicators from the dictionary and return a string
   """
   acc = metrics_d['acc']
   pre = metrics_d['precision']

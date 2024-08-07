@@ -27,7 +27,7 @@ class ViTmod_subtype(nn.Module):
 
     for i in range(len(pathway_number)):
       self.mutil_linear_layers.append(nn.Sequential(
-          nn.LayerNorm(pathway_number[i] + 1),  #$ + 1 加的是额外的分类信息，对应的config里model_params要有categories参数！
+          nn.LayerNorm(pathway_number[i] + 1),  #$ + 1 Additional classification information is added, and the corresponding `categories` parameter must be present in model_params in the config!
           nn.Linear(pathway_number[i] + 1, dim),
           nn.LayerNorm(dim)
       ))
