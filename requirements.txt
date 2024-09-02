@@ -1,5 +1,6 @@
 torch
 torchvision
+zmq
 easydict==1.13
 einops==0.8.0
 imageio==2.34.2
