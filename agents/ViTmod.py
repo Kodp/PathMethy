@@ -35,11 +35,16 @@ class ViTmodAgent(BaseAgent):
     self.external_matrix = None
     if config.get('external_matrix_path', None) is not None:
       em_path = config.external_matrix_path
-      ori_matrix = torch.tensor(pd.read_csv(em_path, sep='\t').iloc[:, 1:].values, device=config.gpu_device)
-      new_shape = (ori_matrix.size(0) + 1, ori_matrix.size(1) + 1)
-      self.external_matrix = torch.zeros(new_shape, device=config.gpu_device)
-      
-      self.external_matrix[1:, 1:] = ori_matrix
+      if config.cuda:
+        ori_matrix = torch.tensor(pd.read_csv(em_path, sep='\t').iloc[:, 1:].values, device=config.gpu_device)
+        new_shape = (ori_matrix.size(0) + 1, ori_matrix.size(1) + 1)
+        self.external_matrix = torch.zeros(new_shape, device=config.gpu_device)
+        self.external_matrix[1:, 1:] = ori_matrix
+      else:
+        ori_matrix = torch.tensor(pd.read_csv(em_path, sep='\t').iloc[:, 1:].values)
+        new_shape = (ori_matrix.size(0) + 1, ori_matrix.size(1) + 1)
+        self.external_matrix = torch.zeros(new_shape)
+        self.external_matrix[1:, 1:] = ori_matrix
 
     self.model = ViTmod(**self.model_params, external_matrix=self.external_matrix)
     self.optimizer = optim.Adam(params=self.model.parameters(), lr=self.config.learning_rate)

@@ -29,7 +29,7 @@ dtype_data: pandas.DataFrame
 external_matrix_path: data/cor_matrix50.csv # BinoX 
 
 # CUDA settings
-cuda: true  
+cuda: false  
 gpu_device: 0
 seed: 42
 
