@@ -1,0 +1,20 @@
+files:
+- original: /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar
+  parts:
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part1
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part2
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part3
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part4
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part5
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part6
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part7
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part8
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part9
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part10
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part11
+  - /home/syh/Research/temp/PathMethy/MODEL/model.pth.tar.part12
+- original: /home/syh/Research/temp/PathMethy/data/test_data.pkl
+  parts:
+  - /home/syh/Research/temp/PathMethy/data/test_data.pkl.part1
+  - /home/syh/Research/temp/PathMethy/data/test_data.pkl.part2
+  - /home/syh/Research/temp/PathMethy/data/test_data.pkl.part3
