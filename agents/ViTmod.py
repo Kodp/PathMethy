@@ -76,7 +76,7 @@ class ViTmodAgent(BaseAgent):
     """
     if os.path.isfile(file_name):
       self.logger.info(f"Loading checkpoint '{file_name}'")
-      checkpoint = torch.load(file_name, map_location=self.device)
+      checkpoint = torch.load(file_name, map_location=self.device, weights_only=True)
 
       
       self.current_epoch = checkpoint['epoch']
