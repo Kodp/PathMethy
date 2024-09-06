@@ -4,7 +4,7 @@
 
 ![img](data/img/image.png)
 
-Despite advanced diagnostics, 3-5% of cases remain classified as cancer of unknown primary (CUP). DNA methylation, an important epigenetic feature, is essential for determining the origin of metastatic tumors. We presented PathMethy, a novel Transformer model integrated with functional categories and crosstalk of pathways, to accurately tracing the origin of tumors in CUPs based on DNA methylation. PathMethy outperformed seven competing methods in F1-score across nine cancer datasets and predicted accurately the molecular subtypes within 9 primary tumor types. It not only excelled at tracing the origins of both primary and metastatic tumors, but also demonstrated a high degree of agreement with previously diagnosed sites in cases of CUP. PathMethy provided biological insights by highlighting key pathways, functional categories and their interactions. Using functional categories of pathways, we gained a global understanding of biological processes. For broader access, a user-friendly web server for researchers and clinicians is available at https://cup.pathmethy.com/index/.
+Despite advanced diagnostics, 3-5% of cases remain classified as cancer of unknown primary (CUP). DNA methylation, an important epigenetic feature, is essential for determining the origin of metastatic tumors. We presented PathMethy, a novel Transformer model integrated with functional categories and crosstalk of pathways, to accurately tracing the origin of tumors in CUPs based on DNA methylation. PathMethy outperformed seven competing methods in F1-score across nine cancer datasets and predicted accurately the molecular subtypes within 9 primary tumor types. It not only excelled at tracing the origins of both primary and metastatic tumors, but also demonstrated a high degree of agreement with previously diagnosed sites in cases of CUP. PathMethy provided biological insights by highlighting key pathways, functional categories and their interactions. Using functional categories of pathways, we gained a global understanding of biological processes. For broader access, a user-friendly web server for researchers and clinicians is available at https://cup.pathmethy.com.
 
 # 🚀 Usage
 
@@ -20,7 +20,6 @@ conda activate PathMethy
 pip install --requirement requirements.txt
 python ./utils/file_chunk.py combine ./metadata.yaml  
 ```
-
 
 > This conda environment is using GPU-accelerated PyTorch. To use this environment, the CUDA version must be 12.0 or higher.
 
