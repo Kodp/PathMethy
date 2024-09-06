@@ -15,10 +15,10 @@ Clone the repository or download the ZIP file of the repository. The repository 
 ```sh
 git clone https://github.com/Kodp/PathMethy.git  # clone the repo
 cd PathMethy
-conda create -n PathMethy python=3.10 # Combine weights and data files
+conda create -n PathMethy python=3.10
 conda activate PathMethy
 pip install --requirement requirements.txt
-python ./utils/file_chunk.py combine ./metadata.yaml  
+python ./utils/file_chunk.py combine ./metadata.yaml  # Combine weights and data files
 ```
 
 > This conda environment is using GPU-accelerated PyTorch. To use this environment, the CUDA version must be 12.0 or higher.
